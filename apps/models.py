@@ -4,8 +4,8 @@ from django.conf import settings
 class App(models.Model):
     name = models.CharField(max_length=50)
     description = models.TextField()
-    type = models.CharField(max_length=50, choices=())
-    framework = models.CharField(max_length=50, choices=())
+    type = models.CharField(max_length=50, choices=(('Web','Web'),('Mobile','Mobile')))
+    framework = models.CharField(max_length=50, choices=(('Django','Django'),('Mobile', 'Mobile')))
     domain_name = models.CharField(max_length=50)
     screenshot = models.ImageField()
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

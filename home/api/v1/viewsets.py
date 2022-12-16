@@ -1,8 +1,10 @@
 from rest_framework.authtoken.serializers import AuthTokenSerializer
-from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.viewsets import ModelViewSet, ViewSet, ReadOnlyModelViewSet
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from rest_framework import status
 
 from home.api.v1.serializers import (
     SignupSerializer,
@@ -45,14 +47,14 @@ class AppViewset(ModelViewSet):
     permission_classes= (IsAuthenticated,)
 
     def get_queryset(self):
-        return App.objects.filter(user=self.user)
+        return App.objects.filter(user=self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(user=self.user)
+        serializer.save(user=self.request.user)
 
 
 
-class PlanViewset(ModelViewSet):
+class PlanViewset(ReadOnlyModelViewSet):
     queryset = Plan.objects.all()
     serializer_class = PlanSerializer
     permission_classes= (IsAuthenticated,)
@@ -63,7 +65,9 @@ class SubscriptionViewset(ModelViewSet):
     permission_classes= (IsAuthenticated,)
 
     def get_queryset(self):
-        return Subscription.objects.filter(user=self.user)
+        return Subscription.objects.filter(user=self.request.user)
     
     def perform_create(self, serializer):
-        serializer.save(user=self.user)
+        serializer.save(user=self.request.user)
+
+    

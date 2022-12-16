@@ -79,8 +79,8 @@ class PasswordSerializer(PasswordResetSerializer):
 class AppSerializer(serializers.ModelSerializer):
     class Meta:
         model = App
-        fields = ['id','name','description','type','framework','domain_name','created_at','updated_at']
-        read_only_fields = ['created_at','updated_at']
+        fields = ['id','name','description','type','framework','domain_name','user','created_at','updated_at']
+        read_only_fields = ['user','created_at','updated_at']
 
 
 class PlanSerializer(serializers.ModelSerializer):
@@ -94,4 +94,4 @@ class SubscriptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Subscription
         fields = ['id','user','plan','app','active','created_at','updated_at']
-        read_only_fields = ['created_at','updated_at']
+        read_only_fields = ['user','created_at','updated_at']
